@@ -75,3 +75,7 @@ crashlytics-build.properties
 Library/
 UserSettings/
 Temp/
+Logs/
+*.log
+Logs/
+*.log
