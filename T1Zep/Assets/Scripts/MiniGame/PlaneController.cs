@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float gravity = 1f;
+    [SerializeField] private float minY = -4.5f;
+    [SerializeField] private float maxY = 4.5f;
 
-    private float vericalVelocity = 0f;
+    private float verticalVelocity = 0f;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -27,7 +28,7 @@ public class PlaneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            vericalVelocity = jumpForce;
+            verticalVelocity = jumpForce;
         }
     }
 
@@ -38,9 +39,16 @@ public class PlaneController : MonoBehaviour
             return;
         }
 
-        vericalVelocity -= gravity * Time.fixedDeltaTime;
-        Vector2 movement = new Vector2(-moveSpeed, vericalVelocity);
-        rb.velocity = movement;
+        verticalVelocity -= gravity * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(0f, verticalVelocity);
+
+        float ClampedY = Mathf.Clamp(transform.position.y, minY, maxY);
+        transform.position = new Vector2(transform.position.x, ClampedY);
+
+        if (transform.position.y <= minY || transform.position.y >= maxY)
+        {
+            verticalVelocity = 0f;
+        }
     }
 
 
