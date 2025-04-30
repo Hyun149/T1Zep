@@ -7,19 +7,19 @@ using UnityEngine.UI;
 public class MiniGameManager : MonoBehaviour
 {
     [SerializeField] private GameObject miniGameUI;
-    [SerializeField] private GameObject introPanel;
+    [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject resultPanel;
 
-    void StartGame()
+    public void StartGame()
     {
         StartCoroutine(GameSequence());
     }
 
     private IEnumerator GameSequence()
     {
-        introPanel.SetActive(true);
+        startButton.SetActive(true);
         yield return new WaitForSeconds(2f);
-        introPanel.SetActive(false);
+        startButton.SetActive(false);
         miniGameUI.SetActive(true);
 
         // 미니게임 시작 (Enable Controller 등)
@@ -30,6 +30,6 @@ public class MiniGameManager : MonoBehaviour
     {
         miniGameUI.SetActive(false);
         resultPanel.SetActive(true);
-        resultPanel.GetComponentInChildren<Text>().text = $"점쉬: {score}";
+        resultPanel.GetComponentInChildren<Text>().text = $"점수: {score}";
     }
 }
