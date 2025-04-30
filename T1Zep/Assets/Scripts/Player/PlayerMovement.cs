@@ -6,37 +6,20 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     private Rigidbody2D rb;
-    private Vector2 moveInput;
 
-    private void Awake()
+    public void Initialize(Rigidbody2D rigidbody)
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = rigidbody;
     }
 
-    private void Update()
-    {
-        HandleInput();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
-    private void HandleInput()
-    {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
-    }
-
-    public void Move()
+    public void Move(Vector2 input)
     {
         Vector2 velocity = rb.velocity;
-        velocity.x = moveInput.x * moveSpeed;
+        velocity.x = input.x * moveSpeed;
 
         if (rb.gravityScale == 0f)
         {
-            velocity.y = moveInput.y * moveSpeed;
+            velocity.y = input.y * moveSpeed;
         }
 
         rb.velocity = velocity;

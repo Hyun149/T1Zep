@@ -8,64 +8,43 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float flapForce = 15.0f;
 
     private Rigidbody2D rb;
-    private bool isFlap;
-    private float jumpStartY = 0f;
-    private bool isJumping = false;
-    private bool canJump = false;
+    private float jumpStartY;
+    private bool isJumping;
+    private bool canJump;
 
-    private void Awake()
+    public void Initialize(Rigidbody2D rigidbody)
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    private IEnumerator Start()
-    {
+        rb = rigidbody;
         rb.gravityScale = 0f;
         rb.velocity = Vector2.zero;
+        StartCoroutine(EnableJump());
+    }
 
-        // 초기 프레임 중력 영향 방지 및 안정화 
+    private IEnumerator EnableJump()
+    {
         yield return new WaitForSeconds(0.1f);
         canJump = true;
     }
 
-    private void Update()
+    public bool IsJumping => isJumping;
+
+    public void RequestJump()
     {
-        if (canJump && Input.GetKeyDown(KeyCode.Space) && !isJumping)
-        {
-            isFlap = true;
-        }
+        if (!canJump || isJumping) return;
+
+        rb.gravityScale = 1f;
+        jumpStartY = transform.position.y;
+        rb.velocity = new Vector2(rb.velocity.x, flapForce);
+        isJumping = true;
     }
 
-    private void FixedUpdate()
-    {
-        JumpIfRequested();
-        CheckLanding();
-    }
-
-    public void JumpIfRequested()
-    {
-        if (!isFlap) return;
-        {
-            rb.gravityScale = 1f;
-            jumpStartY = transform.position.y;
-            rb.velocity = new Vector2(rb.velocity.x, flapForce);
-
-            isJumping = true;
-            isFlap = false;
-        }
-    }
-
-    private void CheckLanding()
+    public void CheckLanding()
     {       
         if (isJumping && rb.velocity.y <= 0f && transform.position.y <= jumpStartY)
         {
             rb.gravityScale = 0f;
             rb.velocity = Vector2.zero;
-
-            Vector3 pos = transform.position;
-            pos.y = jumpStartY;
-            transform.position = pos;
-           
+            transform.position = new Vector3(transform.position.x, jumpStartY, transform.position.z);
             isJumping = false;
             Debug.Log("✅ 점프 후 복귀 착지 완료");
         }
