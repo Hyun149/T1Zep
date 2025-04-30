@@ -20,6 +20,11 @@ public class PlaneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!MiniGameManager.IsGameStarted)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             vericalVelocity = jumpForce;
@@ -28,6 +33,11 @@ public class PlaneController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!MiniGameManager.IsGameStarted)
+        {
+            return;
+        }
+
         vericalVelocity -= gravity * Time.fixedDeltaTime;
         Vector2 movement = new Vector2(-moveSpeed, vericalVelocity);
         rb.velocity = movement;

@@ -10,15 +10,18 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject resultPanel;
 
+    public static bool IsGameStarted = false;
+
     public void StartGame()
     {
+        IsGameStarted = true;
         StartCoroutine(GameSequence());
     }
 
     private IEnumerator GameSequence()
     {
         startButton.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.1f);
         startButton.SetActive(false);
         miniGameUI.SetActive(true);
 
