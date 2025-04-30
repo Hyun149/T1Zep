@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class InteractionTrigger : MonoBehaviour
 {
-    [SerializeField] private string message = "이벤트가 시작됩니다!";
-    [SerializeField] private GameObject uiTextToShow;
+    [SerializeField] private UIActivator UIActivator;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log(message);
-            
-            if (uiTextToShow != null)
-            {
-                uiTextToShow.SetActive(true);
-            }
+            UIActivator?.Activate();          
         }
     }
 
@@ -24,10 +18,7 @@ public class InteractionTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (uiTextToShow != null)
-            {
-                uiTextToShow.SetActive(false);
-            }
+            UIActivator?.Deactivate();
         }
     }
 }
