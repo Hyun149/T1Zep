@@ -10,6 +10,7 @@ public class MiniGameManager : MonoBehaviour
 
     [SerializeField] private MiniGameUIController uIController;
     [SerializeField] private Text scoreText;
+    [SerializeField] private Text bestScoreText;
 
     public static bool IsGameStarted = false;
     public static MiniGameManager Instance { get; private set; }
@@ -28,7 +29,13 @@ public class MiniGameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-            scoreManager = new ScoreManager(scoreText);
+            scoreManager = new ScoreManager(scoreText, bestScoreText);
+    }
+
+    private void Start()
+    {
+        int bestScore = ScoreSaveSystem.GetBestScore();
+        bestScoreText.text = $"최고점수: {bestScore}";
     }
 
     public void StartGame()
@@ -45,7 +52,8 @@ public class MiniGameManager : MonoBehaviour
         uIController.ShowStartButton();
         yield return new WaitForSeconds(0.1f);
         uIController.HideStartButton();
-        uIController.ShowMiniGameUI();
+        uIController.ShowCurrentScore();
+        uIController.HideBestScore();
 
         // 미니게임 시작 (Enable Controller 등)
 
@@ -60,7 +68,7 @@ public class MiniGameManager : MonoBehaviour
         }
     }
 
-    public void EndGame(int score)
+    public void EndGame()
     {
         IsGameStarted = false;
 
@@ -69,10 +77,12 @@ public class MiniGameManager : MonoBehaviour
             StopCoroutine(scoreRoutine);
         }
 
-        uIController.HideMiniGameUI();
+        scoreManager.FinalizeScore();
+
+        uIController.HideCurrentScore();
         uIController.ShowResultPanel();
         uIController.ShowExitButton();
-        Debug.Log($"최종점수: {scoreManager.GetScore()}");
+        uIController.ShowBestScore();
     }
 
     public void RestartGame()

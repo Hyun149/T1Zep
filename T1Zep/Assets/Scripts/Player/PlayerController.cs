@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    private PlayerInputHandler inputHandler;
-    private PlayerMovement movement;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private PlayerMovement movement;
+    [SerializeField] private PlayerInputHandler inputHandler;
+
     private PlayerJump jumper;
     private Rigidbody2D rb;
 
@@ -31,10 +33,24 @@ public class PlayerController : MonoBehaviour
         }
 
         movement.Move(inputHandler.MoveInput);
+
+        HandleFlip(inputHandler.MoveInput.x);
     }
 
     private void FixedUpdate()
     {
         jumper.CheckLanding();
+    }
+
+    private void HandleFlip(float horizontal)
+    {
+        if (horizontal > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (horizontal < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 }

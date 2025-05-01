@@ -49,7 +49,7 @@ public class PlaneController : MonoBehaviour
     {
         if (transform.position.x > 10f)
         {
-            MiniGameManager.Instance.EndGame(MiniGameManager.Instance.GetScore());
+            MiniGameManager.Instance.EndGame();
         }
     }
 
