@@ -12,6 +12,8 @@ public class PlaneController : MonoBehaviour
     private float verticalVelocity = 0f;
     private Rigidbody2D rb;
 
+    MiniGameManager gameManager;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
