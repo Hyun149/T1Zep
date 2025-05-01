@@ -12,19 +12,32 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private Text scoreText;
 
     public static bool IsGameStarted = false;
+    public static MiniGameManager Instance { get; private set; }
 
-    private ScoreManger scoreManger;
+    private ScoreManager scoreManager;
+    private Coroutine scoreRoutine;
 
     private void Awake()
     {
-        scoreManger = new ScoreManger(scoreText);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+            scoreManager = new ScoreManager(scoreText);
     }
 
     public void StartGame()
     {
         IsGameStarted = true;
-        scoreManger.ResetScore();
+        scoreManager.ResetScore();
         StartCoroutine(GameSequence());
+
+        scoreRoutine = StartCoroutine(AutoIncreaseScore());
     }
 
     private IEnumerator GameSequence()
@@ -38,11 +51,28 @@ public class MiniGameManager : MonoBehaviour
 
     }
 
+    private IEnumerator AutoIncreaseScore()
+    {
+        while (IsGameStarted)
+        {
+            yield return new WaitForSeconds(1f);
+            scoreManager.AddScore(1);
+        }
+    }
+
     public void EndGame(int score)
     {
+        IsGameStarted = false;
+
+        if (scoreRoutine != null)
+        {
+            StopCoroutine(scoreRoutine);
+        }
+
         uIController.HideMiniGameUI();
         uIController.ShowResultPanel();
-        Debug.Log($"최종점수: {scoreManger.GetScore()}");
+        uIController.ShowExitButton();
+        Debug.Log($"최종점수: {scoreManager.GetScore()}");
     }
 
     public void RestartGame()
@@ -52,6 +82,11 @@ public class MiniGameManager : MonoBehaviour
 
     public void AddScore(int score)
     {
-        scoreManger.AddScore(score);
+        scoreManager.AddScore(score);
+    }
+
+    public int GetScore()
+    {
+        return scoreManager.GetScore();
     }
 }

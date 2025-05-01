@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour
 {
+    private MiniGameManager miniGameManager;
+
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float gravity = 1f;
     [SerializeField] private float minY = -4.5f;
@@ -12,12 +14,15 @@ public class PlaneController : MonoBehaviour
     private float verticalVelocity = 0f;
     private Rigidbody2D rb;
 
-    MiniGameManager gameManager;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
+    }
+
+    private void Start()
+    {
+        miniGameManager = FindObjectOfType<MiniGameManager>();
     }
 
     // Update is called once per frame
@@ -28,9 +33,23 @@ public class PlaneController : MonoBehaviour
             return;
         }
 
+        HandleJumpInput();
+        CheckGameOver();
+    }
+
+    private void HandleJumpInput()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             verticalVelocity = jumpForce;
+        }
+    }
+
+    private void CheckGameOver()
+    {
+        if (transform.position.x > 10f)
+        {
+            MiniGameManager.Instance.EndGame(MiniGameManager.Instance.GetScore());
         }
     }
 

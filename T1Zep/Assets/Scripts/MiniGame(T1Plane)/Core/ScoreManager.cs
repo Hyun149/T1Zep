@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager
 {
     private int currentScore;
     private Text scoreText;
@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
 
     public void ResetScore()
     {
-        currentScore = 9;
+        currentScore = 0;
         UpdateUI();
     }
 

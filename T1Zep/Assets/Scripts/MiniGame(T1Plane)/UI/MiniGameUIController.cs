@@ -7,6 +7,7 @@ public class MiniGameUIController : MonoBehaviour
     [SerializeField] private GameObject startButton;
     [SerializeField] private GameObject miniGameUI;
     [SerializeField] private GameObject resultPanel;
+    [SerializeField] private GameObject exitButton;
 
     public void ShowStartButton() => startButton.SetActive(true);
     public void HideStartButton() => startButton.SetActive(false);
@@ -16,4 +17,7 @@ public class MiniGameUIController : MonoBehaviour
 
     public void ShowResultPanel() => resultPanel.SetActive(true);
     public void HideResultPanel() => resultPanel.SetActive(false);
+
+    public void ShowExitButton() => exitButton.SetActive(true);
+    public void HideExitButton() => exitButton.SetActive(false); 
 }

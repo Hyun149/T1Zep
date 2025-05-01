@@ -8,4 +8,14 @@ public class FlappyPlaneButtonHandler : MonoBehaviour
     {
         SceneLoader.Load(SceneType.FlappyPlaneScene);
     }
+
+    public void RetryMiniGame()
+    {
+        MiniGameManager.Instance.RestartGame();
+    }
+
+    public void ExitMiniGame()
+    {
+        SceneLoader.Load(SceneType.MainScene);
+    }
 }
