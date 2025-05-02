@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour
 {
-    [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float knockbackTime = 0.3f;
-
-    private bool isKnockback = false;
-
     private MiniGameManager miniGameManager;
-    private PlanePhysics planePhysics;
-    private HitEffectSpawner effectSpawner;
-    private GameOverChecker gameOverChecker;
 
+    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float gravity = 1f;
+    [SerializeField] private float minY = -4.5f;
+    [SerializeField] private float maxY = 4.5f;
+
+    private float verticalVelocity = 0f;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+    }
+
+    private void Start()
+    {
         miniGameManager = FindObjectOfType<MiniGameManager>();
-        planePhysics = GetComponent<PlanePhysics>();
-        effectSpawner = GetComponent<HitEffectSpawner>();
-        gameOverChecker = GetComponent<GameOverChecker>();
     }
 
     // Update is called once per frame
@@ -31,12 +33,21 @@ public class PlaneController : MonoBehaviour
             return;
         }
 
+        HandleJumpInput();
+        CheckGameOver();
+    }
+
+    private void HandleJumpInput()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            planePhysics.ApplyJump(jumpForce);
+            verticalVelocity = jumpForce;
         }
+    }
 
-        if (gameOverChecker.IsOutOfBounds(transform.position))
+    private void CheckGameOver()
+    {
+        if (transform.position.x > 10f)
         {
             MiniGameManager.Instance.EndGame();
         }
@@ -44,28 +55,22 @@ public class PlaneController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!MiniGameManager.IsGameStarted || isKnockback)
+        if (!MiniGameManager.IsGameStarted)
         {
             return;
         }
 
-        planePhysics.ApplyGravity();
-    }
+        verticalVelocity -= gravity * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(0f, verticalVelocity);
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
+        float ClampedY = Mathf.Clamp(transform.position.y, minY, maxY);
+        transform.position = new Vector2(transform.position.x, ClampedY);
+
+        if (transform.position.y <= minY || transform.position.y >= maxY)
         {
-            isKnockback = true;
-            Invoke(nameof(EndKnockback), knockbackTime);
-
-            planePhysics.ApplyKnockback(other.transform.position, 5f);
-            effectSpawner.SpawnEffect(transform.position);
+            verticalVelocity = 0f;
         }
     }
 
-    private void EndKnockback()
-    {
-        isKnockback = false;
-    }
+
 }
