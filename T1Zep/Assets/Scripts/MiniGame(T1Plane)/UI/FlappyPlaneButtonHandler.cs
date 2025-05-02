@@ -6,7 +6,7 @@ public class FlappyPlaneButtonHandler : MonoBehaviour
 {
     public void OnClickStartMiniGame()
     {
-        SceneLoader.Load(SceneType.FlappyPlaneScene);
+        SceneLoader.Load(SceneType.TPlaneScene);
     }
 
     public void RetryMiniGame()

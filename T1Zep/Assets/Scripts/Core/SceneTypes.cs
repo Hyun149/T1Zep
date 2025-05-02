@@ -5,5 +5,6 @@ using UnityEngine;
     public enum SceneType
     {
         MainScene,
-        FlappyPlaneScene
+        TPlaneScene,
+        TStackScene
     }

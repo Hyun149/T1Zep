@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/FlappyPlaneScene.unity
+    path: Assets/Scenes/TPlaneScene.unity
     guid: 8d1be3f4661ef6344bcd0491e5ae5c37
+  - enabled: 1
+    path: Assets/Scenes/TStackScene.unity
+    guid: 361f9872000fd5d44bde6c31f8a26cef
   m_configObjects: {}
