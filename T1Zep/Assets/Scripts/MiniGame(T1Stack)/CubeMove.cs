@@ -6,31 +6,25 @@ using UnityEngine;
 public class CubeMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float maxOffset = 3f;
+    private Vector3 moveDirection;
+    private bool isMoving = true;
 
-    private Vector3[] directions = new Vector3[]
+    public void SetMoveDirection(Vector3 dir)
     {
-        new Vector3(-1f, 0f, 1f).normalized,
-        new Vector3(1f, 0f, 1f).normalized
-    };
+        moveDirection = dir.normalized;
+        isMoving = true;
+    }
 
-    private int currentDirIndex = 0;
-    private Vector3 startPosition;
-
-    private void Start()
+    public void StopMoving()
     {
-        startPosition = transform.position;
+        isMoving = false;
     }
 
     private void Update()
     {
-        transform.position += directions[currentDirIndex] * moveSpeed * Time.deltaTime;
-
-        float distance = Vector3.Distance(startPosition, transform.position);
-        if (distance >= maxOffset)
+        if (isMoving)
         {
-            startPosition = transform.position;
-            currentDirIndex = (currentDirIndex + 1) % directions.Length;
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }
     }
 }
