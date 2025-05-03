@@ -12,7 +12,6 @@ public class StackManager : MonoBehaviour
     private CubeMove currentCube;
 
 
-
     public void Initialize(Transform baseCube)
     {
         lastCube = baseCube;
