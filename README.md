@@ -85,6 +85,7 @@
 - 스크롤 속도 제어 및 시각적 몰입감 개선
 
 ===========================================================================
+
 📅 2025년 5월 2일 (금) 개발 리드미
 
 ✨ 기본 개발 활동
@@ -108,3 +109,32 @@
 - SilverArrow.prefab 추가 및 관련 스크립트 연동
 - InputHandler.cs, ArrowShooter.cs 신규 작성 및 구성 정리
 - CubeSpawner, StackManager 자동화 구조 반영 및 커밋 정리 완료
+
+===========================================================================
+
+📅 2025년 5월 3일 개발 리드미
+
+✅ 주요 작업 내역
+*베인 캐릭터 슈팅 시스템 구현
+ArrowShooter: firePoint 기준 방향으로 화살 발사 기능 구현
+SilverArrow 프리팹: Rigidbody2D + BoxCollider2D 적용, 발사체로서 구성 완료
+InputHandler: Space 키 입력 시 화살 발사 및 쿨타임 처리 로직 구현
+
+*점수 및 UI 시스템 연동
+ArrowProjectile: OnTriggerEnter2D로 큐브 충돌 감지 후 점수 +1 처리
+StackScoreManager: 싱글톤 점수 관리자 구현 (점수 증가 / 초기화 / 조회)
+ScoreUIController: 점수 텍스트 UI에 실시간 반영
+
+*시각적 개선
+Veyne: Quad + MeshRenderer 구성, 흰 배경 제거를 위한 Unlit/Transparent 머티리얼 적용
+2D Sprite 기반 캐릭터를 3D 환경에서 자연스럽게 표현
+
+🛠 기술적 개선 사항
+Rigidbody → Rigidbody2D, BoxCollider → BoxCollider2D로 전환하여 2D 물리 일관성 확보
+firePoint.right 방향으로 정확한 발사 방향 제어
+OnTriggerEnter2D() 기반 충돌 감지를 통해 점수 판정 안정화
+
+🧠 오늘의 회고
+2D와 3D가 혼재된 환경에서의 충돌 처리 및 방향 벡터 정리는 필수
+UI 및 게임 매니저 분리로 구조적 안정성 확보
+단순 발사체 시스템도 구성요소가 많으므로 철저한 분업과 책임 분리가 효과적임을 실감
