@@ -23,7 +23,6 @@ public class StackScoreManager : MonoBehaviour
     public void AddScore(int amount)
     {
         currentScore += amount;
-        Debug.Log($"[Á¡¼ö] +{amount}Á¡ / ÃÑÇÕ: {currentScore}");
     }
 
     public int GetScore()

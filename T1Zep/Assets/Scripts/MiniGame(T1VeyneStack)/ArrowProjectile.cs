@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArroiwProjectile : MonoBehaviour
+public class ArrowProjectile : MonoBehaviour
 {
     private void Update()
     {
@@ -17,7 +17,6 @@ public class ArroiwProjectile : MonoBehaviour
         if (other.CompareTag("T1Cube"))
         {
             StackScoreManager.Instance.AddScore(1);
-            Debug.Log("ИэСп!");
 
             Destroy(other.gameObject);
             Destroy(this.gameObject);

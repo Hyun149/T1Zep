@@ -12,6 +12,14 @@ public class ArrowShooter : MonoBehaviour
     {
         GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * shootForce;
+
+        if (rb != null)
+        {
+            rb.velocity = firePoint.right * shootForce;
+        }
+        else
+        {
+            Debug.LogWarning("RigidBody가 프리펩에 없습니다!");
+        }
     }
 }
