@@ -7,13 +7,25 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private GameObject cubePrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private StackManager stackManager;
+    [SerializeField] private float spawnInterval = 1.5f;
 
+    private float timer = 0f;
     private int spawnIndex = 0;
-    private CubeMove currentCube;
 
     private void Start()
     {
         stackManager.Initialize(GameObject.Find("MainCube").transform);
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= spawnInterval)
+        {
+            timer = 0f;
+            SpawnAndRegisterCube();
+        }
     }
 
     public CubeMove SpawnCube(int spawnIndex)
@@ -28,5 +40,12 @@ public class CubeSpawner : MonoBehaviour
         cubeMove.SetMoveDirection(moveDir);
 
         return cubeMove;
+    }
+
+    private void SpawnAndRegisterCube()
+    {
+        CubeMove cube = SpawnCube(spawnIndex);
+        stackManager.SetCurrentCube(cube);
+        spawnIndex = (spawnIndex + 1) % spawnPoints.Length;
     }
 }

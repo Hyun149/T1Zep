@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    public static event Action OnSpacePressed;
+
+    [SerializeField] private ArrowShooter arrowShooter;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnSpacePressed?.Invoke();
+            arrowShooter.ShootArrow();
         }
     }
 }
