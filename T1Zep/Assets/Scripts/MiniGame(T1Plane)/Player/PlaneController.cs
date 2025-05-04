@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlaneController : MonoBehaviour
 {
-    [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float knockbackTime = 0.3f;
 
     private bool isKnockback = false;
@@ -33,7 +32,7 @@ public class PlaneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            planePhysics.ApplyJump(jumpForce);
+            planePhysics.ApplyJump();
         }
 
         if (gameOverChecker.IsOutOfBounds(transform.position))
@@ -49,6 +48,9 @@ public class PlaneController : MonoBehaviour
             return;
         }
 
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        planePhysics.ApplyHorizontalMovement(horizontalInput);
+
         planePhysics.ApplyGravity();
     }
 
@@ -59,8 +61,14 @@ public class PlaneController : MonoBehaviour
             isKnockback = true;
             Invoke(nameof(EndKnockback), knockbackTime);
 
-            planePhysics.ApplyKnockback(other.transform.position, 5f);
+            ObstacleMover mover = other.GetComponent<ObstacleMover>();
+            float speed = mover != null ? mover.CurrentSpeed : 1f;
+            float knockbackForce = Mathf.Clamp(speed * 1.5f, 3f, 10f);
+
+            planePhysics.ApplyKnockback(other.transform.position, knockbackForce);
             effectSpawner.SpawnEffect(transform.position);
+
+            planePhysics.ReduceJumpForce();
         }
     }
 

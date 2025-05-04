@@ -46,7 +46,6 @@ public class PlayerJump : MonoBehaviour
             rb.velocity = Vector2.zero;
             transform.position = new Vector3(transform.position.x, jumpStartY, transform.position.z);
             isJumping = false;
-            Debug.Log("점프 후 복귀 착지 완료");
         }
     }
 }

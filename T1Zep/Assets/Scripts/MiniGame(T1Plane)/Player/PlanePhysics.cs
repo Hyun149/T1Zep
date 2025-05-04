@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanePhysics : MonoBehaviour
 {
-    private Rigidbody2D rb;
     [SerializeField] private float Gravity = 1f;
     [SerializeField] private float MaxY = 4.5f;
+    [SerializeField] private float baseJumpForce = 5f;
+    [SerializeField] private float jumpDecay = 0.5f;
+    [SerializeField] private float minJumpForce = 2f;
+    [SerializeField] private float horizontalSpeed = 3f;
+
+    private Rigidbody2D rb;
     private float verticalVelocity = 0f;
+    private JumpHandler jumpHandler;
     
 
     private void Awake()
@@ -15,15 +22,23 @@ public class PlanePhysics : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void ApplyJump(float jumpForce)
+    private void Start()
     {
-        verticalVelocity = jumpForce;
+        jumpHandler = new JumpHandler(baseJumpForce, jumpDecay, minJumpForce);
+    }
+
+    public void ApplyJump()
+    {
+        verticalVelocity = jumpHandler.GetForce();
     }
 
     public void ApplyGravity()
     {
         verticalVelocity -= Gravity * Time.fixedDeltaTime;
-        rb.velocity = new Vector2(0f, verticalVelocity);
+
+        Vector2 velocity = rb.velocity;
+        velocity.y = verticalVelocity;
+        rb.velocity = velocity;
 
         float clampedY = Mathf.Min(transform.position.y, MaxY);
         transform.position = new Vector2(transform.position.x, clampedY);
@@ -39,5 +54,17 @@ public class PlanePhysics : MonoBehaviour
         Vector2 dir = ((Vector2)transform.position - from).normalized;
         rb.velocity = Vector2.zero;
         rb.velocity = dir * force;
+    }
+
+    public void ApplyHorizontalMovement(float input)
+    {
+        Vector2 velocity = rb.velocity;
+        velocity.x = input * horizontalSpeed;
+        rb.velocity = velocity;
+    }
+
+    public void ReduceJumpForce()
+    {
+        jumpHandler.Reduce();
     }
 }

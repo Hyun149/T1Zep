@@ -1768,7 +1768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5c5cfb5c2217545a81a914500b87a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 5
   knockbackTime: 0.3
 --- !u!50 &1593186839
 Rigidbody2D:
@@ -1811,6 +1810,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gravity: 9.8
   MaxY: 4.5
+  baseJumpForce: 5
+  jumpDecay: 0.5
+  minJumpForce: 2
+  horizontalSpeed: 3
 --- !u!114 &1593186841
 MonoBehaviour:
   m_ObjectHideFlags: 0

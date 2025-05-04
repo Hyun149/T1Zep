@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class ObstacleMover : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2f;
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float speedIncreaseRate = 1f;
 
-    // Update is called once per frame
+    public float CurrentSpeed { get; private set; }
+
+    private float spawnTime;
+
+    private void Start()
+    {
+        spawnTime = Time.time;
+    }
+
     void Update()
     {
         if (!MiniGameManager.IsGameStarted)
@@ -14,7 +23,10 @@ public class ObstacleMover : MonoBehaviour
             return;
         }
 
-        transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+        float elapsed = Time.timeSinceLevelLoad;
+        float currentSpeed = moveSpeed + (elapsed * speedIncreaseRate);
+
+        transform.Translate(Vector3.right * currentSpeed * Time.deltaTime);
 
         if (transform.position.x > 10f)
         {
