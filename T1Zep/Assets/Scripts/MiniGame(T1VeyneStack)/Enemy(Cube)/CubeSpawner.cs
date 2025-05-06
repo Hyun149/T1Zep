@@ -10,7 +10,6 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 1.5f;
 
     private float timer = 0f;
-    private int spawnIndex = 0;
 
     private void Start()
     {
@@ -33,19 +32,22 @@ public class CubeSpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[spawnIndex];
         Vector3 spawnPos = stackManager.GetNextSpawnPosition(spawnPoint.position);
 
-        GameObject cube = Instantiate(cubePrefab, spawnPoint.position, Quaternion.identity);
-        Vector3 moveDir = (spawnIndex == 0) ? Vector3.back : spawnPoint.forward;
+        GameObject cube = Instantiate(cubePrefab, spawnPos, Quaternion.identity);
+
+        Vector3[] possibleDirs = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+        Vector3 moveDir = possibleDirs[Random.Range(0, possibleDirs.Length)];
 
         CubeMove cubeMove = cube.GetComponent<CubeMove>();
         cubeMove.SetMoveDirection(moveDir);
+        cubeMove.SetRandomSpeed();
 
         return cubeMove;
     }
 
     private void SpawnAndRegisterCube()
     {
-        CubeMove cube = SpawnCube(spawnIndex);
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        CubeMove cube = SpawnCube(randomIndex);
         stackManager.SetCurrentCube(cube);
-        spawnIndex = (spawnIndex + 1) % spawnPoints.Length;
     }
 }
