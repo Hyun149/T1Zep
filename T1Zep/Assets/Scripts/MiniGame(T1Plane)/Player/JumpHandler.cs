@@ -17,7 +17,7 @@ public class JumpHandler
 
     public float GetForce() => current;
 
-    public void Reduce() => current = Mathf.Max(min, current - decay);
+    public void Reduce() => current = Mathf.Max(0f, current - decay);
 
     public void ResetJumpForce(float value) => current = value;
 }
