@@ -116,23 +116,23 @@
 
 ✅ 주요 작업 내역
 *베인 캐릭터 슈팅 시스템 구현
-ArrowShooter: firePoint 기준 방향으로 화살 발사 기능 구현
-SilverArrow 프리팹: Rigidbody2D + BoxCollider2D 적용, 발사체로서 구성 완료
-InputHandler: Space 키 입력 시 화살 발사 및 쿨타임 처리 로직 구현
+- ArrowShooter: firePoint 기준 방향으로 화살 발사 기능 구현
+- SilverArrow 프리팹: Rigidbody2D + BoxCollider2D 적용, 발사체로서 구성 완료
+- InputHandler: Space 키 입력 시 화살 발사 및 쿨타임 처리 로직 구현
 
 *점수 및 UI 시스템 연동
-ArrowProjectile: OnTriggerEnter2D로 큐브 충돌 감지 후 점수 +1 처리
-StackScoreManager: 싱글톤 점수 관리자 구현 (점수 증가 / 초기화 / 조회)
-ScoreUIController: 점수 텍스트 UI에 실시간 반영
+- ArrowProjectile: OnTriggerEnter2D로 큐브 충돌 감지 후 점수 +1 처리
+- StackScoreManager: 싱글톤 점수 관리자 구현 (점수 증가 / 초기화 / 조회)
+- ScoreUIController: 점수 텍스트 UI에 실시간 반영
 
 *시각적 개선
-Veyne: Quad + MeshRenderer 구성, 흰 배경 제거를 위한 Unlit/Transparent 머티리얼 적용
-2D Sprite 기반 캐릭터를 3D 환경에서 자연스럽게 표현
+- Veyne: Quad + MeshRenderer 구성, 흰 배경 제거를 위한 Unlit/Transparent 머티리얼 적용
+- 2D Sprite 기반 캐릭터를 3D 환경에서 자연스럽게 표현
 
 🛠 기술적 개선 사항
-Rigidbody → Rigidbody2D, BoxCollider → BoxCollider2D로 전환하여 2D 물리 일관성 확보
-firePoint.right 방향으로 정확한 발사 방향 제어
-OnTriggerEnter2D() 기반 충돌 감지를 통해 점수 판정 안정화
+- Rigidbody → Rigidbody2D, BoxCollider → BoxCollider2D로 전환하여 2D 물리 일관성 확보
+- firePoint.right 방향으로 정확한 발사 방향 제어
+- OnTriggerEnter2D() 기반 충돌 감지를 통해 점수 판정 안정화
 
 🧠 오늘의 회고
 2D와 3D가 혼재된 환경에서의 충돌 처리 및 방향 벡터 정리는 필수
@@ -143,14 +143,15 @@ UI 및 게임 매니저 분리로 구조적 안정성 확보
 
 📅 2025년 5월 4일 작업 로그 (개발 리드미)
 
-✅ 주요 작업 내역 feat(plane):
+✅ 주요 작업 내역 
+feat(plane):
+- 비행기 좌우 이동 기능 구현
+- 넉백 강도 증가로 충돌 반응 개선
 
-비행기 좌우 이동 기능 구현
-넉백 강도 증가로 충돌 반응 개선
 feat(animation):
+- PlayerAnimator 클래스 분리
+- 이동 상태(isRunning)에 따른 애니메이션 전이 설정 및 연동 완료
 
-PlayerAnimator 클래스 분리
-이동 상태(isRunning)에 따른 애니메이션 전이 설정 및 연동 완료
 feat(assets):
 던전 타일셋, 프리팹 이미지 에셋 교체 및 .meta 정리
 
@@ -158,10 +159,17 @@ feat(assets):
 
 🛠️ 2025년 5월 6일 작업 로그 (개발 리드미)
 
-✅ 오늘의 작업 내역 🎮 VeyneMove 클래스 구현 ↳ 방향키(←↑↓→) 입력 기반 이동 시스템 구현 ↳ Y축 고정 처리로 일관된 수평 이동 제공
+✅ 오늘의 작업 내역 
+🎮 VeyneMove 클래스 구현 
+- 방향키(←↑↓→) 입력 기반 이동 시스템 구현 
+- Y축 고정 처리로 일관된 수평 이동 제공
 
-🧱 Stack 게임 구조 개선 ↳ StackScoreManager 싱글턴 구조로 전환 ↳ 점수 UI 연동 로직 정비 및 캔버스 동기화 해결
+🧱 Stack 게임 구조 개선 
+- StackScoreManager 싱글턴 구조로 전환 
+- 점수 UI 연동 로직 정비 및 캔버스 동기화 해결
 
-🌌 배경 구성 및 시각 연출 추가 ↳ Visual 오브젝트에 Quad 기반 배경 이미지 적용 ↳ QuadAnimator를 활용한 Material 텍스처 애니메이션 처리
+🌌 배경 구성 및 시각 연출 추가 
+- Visual 오브젝트에 Quad 기반 배경 이미지 적용 
+- QuadAnimator를 활용한 Material 텍스처 애니메이션 처리
 
 ===========================================================================
