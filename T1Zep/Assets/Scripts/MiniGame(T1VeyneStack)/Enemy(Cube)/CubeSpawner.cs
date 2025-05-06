@@ -13,7 +13,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void Start()
     {
-        stackManager.Initialize(GameObject.Find("MainCube").transform);
+        stackManager.Initialize(spawnPoints[0]);
     }
 
     private void Update()
