@@ -12,7 +12,7 @@ public class CubeMove : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 30f);
     }
 
     private void Update()

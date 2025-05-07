@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 393505086013413175}
   - component: {fileID: 6696787683121694651}
   m_Layer: 0
-  m_Name: Enemy(GenG)
+  m_Name: Enemy(Plane)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
