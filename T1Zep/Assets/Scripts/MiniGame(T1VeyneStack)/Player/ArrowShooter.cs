@@ -10,7 +10,7 @@ public class ArrowShooter : MonoBehaviour
 
     public void ShootArrow()
     {
-        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = arrow.GetComponent<Rigidbody>();
 
         if (rb != null)

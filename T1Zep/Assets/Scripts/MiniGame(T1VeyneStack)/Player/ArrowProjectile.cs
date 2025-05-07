@@ -6,10 +6,7 @@ public class ArrowProjectile : MonoBehaviour
 {
     private void Update()
     {
-        if (transform.position.x > 20f)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject, 5f);
     }
 
     private void OnTriggerEnter(Collider other)
