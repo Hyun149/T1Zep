@@ -10,6 +10,19 @@ public class CubeMove : MonoBehaviour
     private Vector3 moveDirection;
     private bool isMoving = true;
 
+    private void Start()
+    {
+        Destroy(gameObject, 10f);
+    }
+
+    private void Update()
+    {
+        if (isMoving)
+        {
+            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        }
+    }
+
     public void SetMoveDirection(Vector3 dir)
     {
         moveDirection = dir.normalized;
@@ -19,14 +32,6 @@ public class CubeMove : MonoBehaviour
     public void StopMoving()
     {
         isMoving = false;
-    }
-
-    private void Update()
-    {
-        if (isMoving)
-        {
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
-        }
     }
 
     public void SetRandomSpeed()
